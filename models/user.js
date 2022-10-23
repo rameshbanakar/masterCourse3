@@ -5,10 +5,10 @@ const schema = mongoose.Schema;
 const userSchema = new schema({
   email: { type: String, required: true },
   password: { type: String, required: true, seleted: false },
-  user: { type: String, required: true },
+  name: { type: String, required: true },
 });
 
-userSchema.methods.enCryptPassword = async (password) => {
+userSchema.methods.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(5);
   const hash = await bcrypt.hash(password, salt);
   return hash;

@@ -6,7 +6,7 @@ exports.isEmail = body("email")
   .isEmail()
   .withMessage("Enter the valid email id");
 exports.hasPassword = body("password")
-  .isEmpty()
+  .isLength({min:5})
   .withMessage("Enter the valid password");
 exports.hasName = body("name")
   .isLength({ min: 5 })
