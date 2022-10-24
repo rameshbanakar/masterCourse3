@@ -1,12 +1,21 @@
 const validationHandler = require("../validation/validationHandler");
 const Post = require("../models/post");
 const post = require("../models/post");
+const { populate } = require("../models/user");
 
 exports.index = async (req, res, next) => {
   try {
+    const pagination = req.query.pagination
+      ? parseInt(req.query.pagination)
+      : 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
     const posts = await Post.find({
       user: { $in: [...req.user.following, req.user.id] },
-    }).sort({ createAt: -1 });
+    })
+      .skip((page - 1) * pagination)
+      .limit(pagination)
+      .populate("user")
+      .sort({ createAt: -1 });
     res.send(posts);
   } catch (err) {
     next(err);
