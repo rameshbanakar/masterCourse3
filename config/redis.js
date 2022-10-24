@@ -3,7 +3,7 @@ const redis = require("redis");
 const config = require("../config/index");
 let client;
 module.exports = {
-  getClient: () => {
+  getClient:()=>{
     if (!client) {
       redisConfig = {
         host: config.redisHOST,
@@ -13,7 +13,7 @@ module.exports = {
         redisConfig.password = config.redisPassword;
       }
       client = redis.createClient(redisConfig);
-      client.hget = util.promisify(client.hget);
+      client.hGet = util.promisify(client.hGet);
     }
     return client;
   },

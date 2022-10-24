@@ -59,7 +59,9 @@ exports.me = async (req, res, next) => {
     //   const cacheUser=new User(doc)
     //   return res.send(cacheUser)
     // }
+    console.log("getting from db")
     const user = await User.findById(req.user);
+    //redisClient.hget("user",req.user.id,JSON.stringify(user))
     return res.send(user);
   } catch (err) {
     next(err);
