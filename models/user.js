@@ -6,6 +6,7 @@ const userSchema = new schema({
   email: { type: String, required: true },
   password: { type: String, required: true, seleted: false },
   name: { type: String, required: true },
+  following:[{type:schema.Types.ObjectId,ref:"user"}]
 });
 
 userSchema.methods.encryptPassword = async (password) => {

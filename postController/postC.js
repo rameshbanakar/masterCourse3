@@ -4,7 +4,9 @@ const post = require("../models/post");
 
 exports.index = async (req, res, next) => {
   try {
-    const posts = await Post.find().sort({ createAt: -1 });
+    const posts = await Post.find({
+      user: { $in: [...req.user.following, req.user.id] },
+    }).sort({ createAt: -1 });
     res.send(posts);
   } catch (err) {
     next(err);
@@ -12,7 +14,10 @@ exports.index = async (req, res, next) => {
 };
 exports.show = async (req, res, next) => {
   try {
-    const post = await Post.findOne({ _id: req.params.id }).populate("user");
+    const post = await Post.find({
+      _id: req.params.id,
+      user: { $in: [...req.user.following, req.user.id] },
+    }).populate("user");
     res.send(post);
   } catch (err) {
     next(err);
@@ -37,7 +42,6 @@ exports.update = async (req, res, next) => {
     validationHandler(req);
     let post = await Post.findById(req.params.id);
     if (!post || post.user != req.user.id) {
-      
       const error = new Error("you are not post owner to update");
       error.status = 400;
       throw error;
@@ -56,7 +60,6 @@ exports.delete = async (req, res, next) => {
     validationHandler(req);
     let post = await Post.findById(req.params.id);
     if (!post || post.user != req.user.id) {
-     
       const error = new Error("you are not post owner to delete");
       error.status = 400;
       throw error;

@@ -14,13 +14,14 @@ mongoose.connect("mongodb://localhost/rest-api-node", {
 const app = express();
 const postRoute = require("./Route/post");
 const authRoute = require("./Route/auth");
+const followRoute = require("./Route/follow");
 
 app.use(bodyParser.json());
 app.use(express.json())
 app.use(cors());
-app.use("/api/post",passportJWT.authenticate() ,postRoute);
+app.use("/api/post",passportJWT.authenticate(),postRoute);
 app.use("/api/auth", authRoute);
-
+app.use("/api/follow",passportJWT.authenticate(),followRoute)
 app.use(errorHandler);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passportJWT.initialize());
