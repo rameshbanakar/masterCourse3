@@ -1,5 +1,5 @@
 const util = require("util");
-const redis = require("redies");
+const redis = require("redis");
 const config = require("../config/index");
 let client;
 module.exports = {
