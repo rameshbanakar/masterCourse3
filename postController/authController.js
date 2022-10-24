@@ -7,7 +7,7 @@ exports.login = async (req, res, next) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const user = await User.findOne({ email }).select("password");
+    let user = await User.findOne({ email }).select("password");
     if (!user) {
       const error = new Error("credentials not found");
       error.status = 401;
@@ -19,7 +19,8 @@ exports.login = async (req, res, next) => {
       error.status = 401;
       throw error;
     }
-    const token = jwt.encode({ id: user.id }, config.jwtSecret);
+    const token = jwt.encode({ id: user.id },jwtSecret);
+    user=await User.findOne({email});
     return res.send({ user, token });
   } catch (err) {
     next(err);

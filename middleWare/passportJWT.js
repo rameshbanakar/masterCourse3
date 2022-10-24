@@ -12,18 +12,18 @@ const params = {
 };
 
 module.exports = () => {
-  const Stratery = new Strategy(params, async (payload, done) => {
-    const User = await User.findById(payload.id);
-    if (!User) return done(new Error("user not found"));
-    return done(null, User);
+  const strategy = new Strategy(params, async (payload, done) => {
+    const user = await User.findById(payload.id);
+    if (!user) return done(new Error("user not found"));
+    return done(null, user);
   });
-  passport.use(Strategy);
+  passport.use(strategy);
   return {
     initialize: function () {
       return passport.initialize();
     },
-    autheticate: function () {
-      return passport.authenticate("jwt", { session: false });
+    authenticate: function () {
+      return passport.authenticate('jwt', { session: false });
     },
   };
 };

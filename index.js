@@ -18,7 +18,7 @@ const authRoute = require("./Route/auth");
 app.use(bodyParser.json());
 app.use(express.json())
 app.use(cors());
-app.use("/api/post", postRoute);
+app.use("/api/post",passportJWT.authenticate() ,postRoute);
 app.use("/api/auth", authRoute);
 
 app.use(errorHandler);
