@@ -20,7 +20,7 @@ const followRoute = require("./Route/follow");
 app.use(bodyParser.json());
 app.use(express.json())
 app.use(cors());
-
+//
 // const limiter = rateLimit({
 // 	windowMs: 15 * 1000, // 15 seconds
 // 	max: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
