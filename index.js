@@ -6,9 +6,9 @@ const rateLimit=require("express-rate-limit")
 const cors = require("cors");
 const mongoose = require("mongoose");
 const passportJWT = require("./middleWare/passportJWT")();
-
+const config=require("./config")
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/rest-api-node", {
+mongoose.connect(config.mongoURI, {
   useNewUrlParser: true,
 });
 
@@ -37,4 +37,5 @@ app.use("/api/follow",passportJWT.authenticate(),followRoute)
 app.use(errorHandler);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passportJWT.initialize());
-app.listen("8000", () => console.log("listening"));
+
+app.listen(config.port, () => console.log("listening"));

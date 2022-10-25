@@ -7,9 +7,11 @@ const ExtractJwt = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
 
 const params = {
-  secretOrKey: config.jwtSecret,
+  secretOrKey: config.secretOrKey,
+  
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
+
 
 module.exports = () => {
   const strategy = new Strategy(params, async (payload, done) => {
