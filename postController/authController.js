@@ -1,5 +1,5 @@
 const jwt = require("jwt-simple");
-const { jwtSecret } = require("../config");
+const { secretOrKey } = require("../config");
 const config = require("../config");
 const User = require("../models/user");
 //const redisClient=require("../config/redis").getClient();
@@ -20,7 +20,7 @@ exports.login = async (req, res, next) => {
       error.status = 401;
       throw error;
     }
-    const token = jwt.encode({ id: user.id },jwtSecret);
+    const token = jwt.encode({ id: user.id },secretOrKey);
     user=await User.findOne({email});
     return res.send({ user, token });
   } catch (err) {
@@ -43,7 +43,7 @@ exports.signup = async (req, res, next) => {
     user.name = req.body.name;
     user = await user.save();
 
-    const token = jwt.encode({ id: user.id }, config.jwtSecret);
+    const token = jwt.encode({ id: user.id }, config.secretOrKey);
     return res.send({ user, token });
   } catch (err) {
     next(err);

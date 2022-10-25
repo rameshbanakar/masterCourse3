@@ -1,6 +1,6 @@
 const util = require("util");
 const redis = require("redis");
-const config = require("../config/index");
+const config = require("../config");
 let client;
 module.exports = {
   getClient:()=>{
